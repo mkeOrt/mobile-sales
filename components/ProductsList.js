@@ -7,20 +7,19 @@ const ProductsList = ({ products }) => {
   return (
     <FlatList
       data={products}
-      keyExtractor={item => item.id}
+      keyExtractor={(item, id) => id}
       renderItem={({ item }) => (
-        <ListItem bottomDivider>
+        <ListItem bottomDivider={false}>
           <View style={tw.style('rounded', { overflow: 'hidden' })}>
-            <Avatar source={{ uri: item.picture }} />
+            <Avatar source={{ uri: item.picture.large }} />
           </View>
           <ListItem.Content>
-            <ListItem.Title>{ item.name }</ListItem.Title>
-            <ListItem.Subtitle>${ item.price }</ListItem.Subtitle>
+            <ListItem.Title>{item.name.first} {item.name.last}</ListItem.Title>
+            <ListItem.Subtitle>{item.email}</ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
       )}
     />
-
   )
 }
 
