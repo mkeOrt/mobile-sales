@@ -1,54 +1,41 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Text, View } from 'react-native';
-import tw from 'tailwind-react-native-classnames';
-import { Camera } from 'expo-camera';
+import React from 'react'
+import { SafeAreaView, Text, StatusBar as SB, StyleSheet, Platform } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { FAB, Icon } from 'react-native-elements';
+import tw from 'tailwind-react-native-classnames'
+import ProductsList from './components/ProductsList';
+
+const products = [
+  {
+    id: 1,
+    name: 'Coca',
+    price: 14,
+    picture: 'https://randomuser.me/api/portraits/women/60.jpg'
+  },
+  {
+    id: 2,
+    name: 'Pepsi',
+    price: 12,
+    picture: 'https://randomuser.me/api/portraits/women/69.jpg'
+  },
+];
 
 export default function App() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [isUsingCamera, setIsUsingCamera] = useState(false);
-  const [code, setCode] = useState(null);
-
-  const onBarCodeScanned = ({ data }) => {
-    setIsUsingCamera(false);
-    setCode(data)
-  }
-
-  const openCamera = () => {
-    setIsUsingCamera(true);
-  }
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
   return (
-    <View style={tw`h-full`, !isUsingCamera ? [{flex: 1, justifyContent: 'center', alignItems: 'center'}]: ''}>
-      {isUsingCamera &&
-        <View style={tw`h-1/2 m-5 mt-10`}>
-          <View style={tw`h-full`}>
-            <Camera type="back" style={tw`h-full w-full`} onBarCodeScanned={onBarCodeScanned} />
-          </View>
-        </View>
-      }
-      {!isUsingCamera && <Text>{code ? code : 'Código no escaneado'}</Text>}
-      {!isUsingCamera &&
-        <FAB
-          color="dodgerblue"
-          icon={<Icon type="antdesign" name="camera" color="white" />}
-          placement="right"
-          onPress={openCamera}
-        />
-      }
-    </View>
+    <SafeAreaView style={tw.style('h-full', styles.container)}>
+      <ProductsList products={products} />
+      <FAB
+        placement="right"
+        color="dodgerblue"
+        icon={<Icon color="white" type="antdesign" name="plus"/>}
+      />
+      <StatusBar style="auto" />
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: Platform.OS === 'android' ? SB.currentHeight : 0,
+  }
+});
