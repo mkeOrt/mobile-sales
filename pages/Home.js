@@ -3,8 +3,7 @@ import { SafeAreaView, Text, View } from 'react-native';
 import { FAB, Icon } from 'react-native-elements';
 import ProductsList from '../components/ProductsList';
 import tw from 'tailwind-react-native-classnames';
-import { MY_NAME } from '@env'
-
+import { supabase } from '../lib/supabase'
 
 const Home = ({ navigation }) => {
   const [products, setProducts] = useState([]);
