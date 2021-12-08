@@ -6,7 +6,8 @@ import tw from 'tailwind-react-native-classnames';
 
 
 const Home = ({ navigation }) => {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
+
   useEffect(async () => {
     const data = await fetch('https://randomuser.me/api/?results=20')
       .then((response) => response.json())
@@ -15,7 +16,7 @@ const Home = ({ navigation }) => {
 
   return (
     <SafeAreaView style={tw`h-full bg-white`}>
-      <View style={tw`p-4`}>
+      <View style={tw`mt-10 pl-3`}>
         <Text style={tw`text-3xl font-medium`}>Productos</Text>
       </View>
       <ProductsList products={products} />
