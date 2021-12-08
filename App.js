@@ -12,7 +12,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, gestureEnabled: true }}>
+        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: true, gestureEnabled: true }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="AddProduct" component={AddProduct} />
         </Stack.Navigator>
