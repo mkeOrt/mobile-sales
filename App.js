@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Home from './pages/Home';
 import AddProduct from './pages/AddProduct';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import 'react-native-url-polyfill/auto';
 
 export default function App() {
   const Stack = createNativeStackNavigator();

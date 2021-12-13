@@ -11,11 +11,11 @@ const ProductsList = ({ products }) => {
       renderItem={({ item }) => (
         <ListItem bottomDivider={false}>
           <View style={tw.style('rounded', { overflow: 'hidden' })}>
-            <Avatar source={{ uri: item.picture.large }} />
+            <Avatar source={{ uri: 'https://picsum.photos/200' }} />
           </View>
           <ListItem.Content>
-            <ListItem.Title>{item.name.first} {item.name.last}</ListItem.Title>
-            <ListItem.Subtitle>{item.email}</ListItem.Subtitle>
+            <ListItem.Title>{item.name}</ListItem.Title>
+            <ListItem.Subtitle>${item.price}</ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
       )}

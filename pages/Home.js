@@ -10,9 +10,9 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      const data = await fetch('https://randomuser.me/api/?results=20')
-        .then(res => res.json());
-      setProducts(data.results);
+      const { data } = await supabase.from('products').select('*');
+      setProducts(data);
+      console.log(data)
     })();
   }, []);
 
