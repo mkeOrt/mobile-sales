@@ -1,19 +1,21 @@
 import React from 'react'
-import { StatusBar } from 'expo-status-bar';
+import { setStatusBarHidden, StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from './pages/Home';
 import AddProduct from './pages/AddProduct';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-url-polyfill/auto';
+import 'react-native-gesture-handler';
+
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
+  const Stack = createStackNavigator();
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: true, gestureEnabled: true }}>
+      <NavigationContainer >
+        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="AddProduct" component={AddProduct} />
         </Stack.Navigator>

@@ -8,25 +8,24 @@ import { supabase } from '../lib/supabase'
 const Home = ({ navigation }) => {
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await supabase.from('products').select('*');
-      setProducts(data);
-      console.log(data)
-    })();
-  }, []);
+  const getProducts = async () => {
+    const { data } = await supabase.from('products').select('*');
+    setProducts(data);
+  }
+
+  useEffect(() => getProducts(), []);
 
   return (
     <SafeAreaView style={tw`h-full bg-white`}>
-      {/* <View style={tw`android:mt-10 pl-3`}>
+      <View style={tw`android:mt-10 pl-3`}>
         <Text style={tw`text-3xl font-medium`}>Productos</Text>
-      </View> */}
-      <ProductsList products={products} />
+      </View>
+      <ProductsList products={products} onRefresh={getProducts}/>
       <FAB
         placement="right"
         color="dodgerblue"
         icon={<Icon color="white" type="antdesign" name="plus" />}
-        onPress={() => navigation.navigate('AddProduct')}
+        onPress={() => navigation.push('AddProduct')}
       />
     </SafeAreaView>
   );
