@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Input } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import tw from 'tailwind-react-native-classnames';
+import { useGetProducts } from '../hooks/products';
 import { supabase } from '../lib/supabase'
 
 const AddProduct = ({ navigation }) => {
