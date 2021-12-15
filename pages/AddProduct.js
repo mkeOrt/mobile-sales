@@ -35,7 +35,7 @@ const AddProduct = ({ navigation }) => {
             size="large"
             source={noImage}
             style={{ height: 150, width: 150 }}
-            onPress={() => console.log('Cambiar imagen')}
+            onPress={() => navigation.push('AddProductImage')}
           />
         </View>
         <Input

@@ -21,7 +21,7 @@ const ProductsList = () => {
             <ListItem.Title>{item.name}</ListItem.Title>
             <ListItem.Subtitle>${item.price}</ListItem.Subtitle>
           </ListItem.Content>
-          <Icon name="barcode" type="font-awesome" />
+          <Icon name="barcode" type="antdesign" />
         </ListItem>
       )}
     />
