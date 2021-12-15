@@ -45,4 +45,18 @@ export const useCreateProduct = () => {
     createProduct,
     creatingProduct,
   }
-}
+};
+
+export const useGetProductImage = () => {
+  const getProductImage = async (name = 'no-image.png') => {
+    const { data } = await supabase.storage.from('product').download(name);
+    return data;
+  }
+};
+
+export const useUploadProductImage = (name, image) => {
+  const uploadProductImage = async () => {
+    const { data } = await supabase.storage.from('product').upload(name, image);
+    return data;
+  }
+};

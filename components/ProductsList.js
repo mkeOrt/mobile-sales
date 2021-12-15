@@ -3,6 +3,7 @@ import tw from 'tailwind-react-native-classnames'
 import { FlatList, RefreshControl, View } from 'react-native'
 import { Avatar, Icon, ListItem } from 'react-native-elements';
 import { useGetProducts } from '../hooks/productsHook';
+import noImage from '../assets/no-image.png'
 
 const ProductsList = () => {
   const { products, getProducts, loadingProduct } = useGetProducts();
@@ -15,7 +16,7 @@ const ProductsList = () => {
       renderItem={({ item }) => (
         <ListItem bottomDivider={false}>
           <View style={tw.style('rounded', { overflow: 'hidden' })}>
-            <Avatar source={{ uri: 'https://picsum.photos/200/200' }} size="medium" />
+            <Avatar source={noImage} size="medium" />
           </View>
           <ListItem.Content>
             <ListItem.Title>{item.name}</ListItem.Title>

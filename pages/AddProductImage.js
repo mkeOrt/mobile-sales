@@ -5,27 +5,17 @@ import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react
 import { FAB, Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import tw from 'tailwind-react-native-classnames';
+import { useTakePhoto } from '../hooks/cameraHook';
 import { setProductToCreateImage } from '../slices/productsSlice';
 
 const AddProductImage = ({ navigation }) => {
+  const { setCamera, hasPermission, takePicture } = useTakePhoto();
   const dispatch = useDispatch();
 
-  const [hasPermission, setHasPermission] = useState(null);
-  const [camera, setCamera] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
   const snap = async () => {
-    if (camera) {
-      let photo = await camera.takePictureAsync();
-      dispatch(setProductToCreateImage(photo.uri));
-      navigation.goBack();
-    }
+    let photo = await takePicture();
+    dispatch(setProductToCreateImage(photo.uri));
+    navigation.goBack();
   };
 
   if (hasPermission === null) return <View />;
