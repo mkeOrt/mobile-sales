@@ -52,11 +52,15 @@ export const useGetProductImage = () => {
     const { data } = await supabase.storage.from('product').download(name);
     return data;
   }
+
+  return { getProductImage };
 };
 
-export const useUploadProductImage = (name, image) => {
-  const uploadProductImage = async () => {
+export const useUploadProductImage = () => {
+  const uploadProductImage = async (name, image) => {
     const { data } = await supabase.storage.from('product').upload(name, image);
     return data;
   }
+
+  return { uploadProductImage };
 };
