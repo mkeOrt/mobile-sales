@@ -1,6 +1,6 @@
 
 import { Camera } from 'expo-camera';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { FAB, Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
