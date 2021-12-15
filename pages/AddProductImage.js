@@ -3,9 +3,13 @@ import { Camera } from 'expo-camera';
 import React, { useEffect, useState } from 'react'
 import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { FAB, Icon } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
 import tw from 'tailwind-react-native-classnames';
+import { setProductToCreateImage } from '../slices/productsSlice';
 
 const AddProductImage = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [hasPermission, setHasPermission] = useState(null);
   const [camera, setCamera] = useState(null);
 
@@ -19,7 +23,7 @@ const AddProductImage = ({ navigation }) => {
   const snap = async () => {
     if (camera) {
       let photo = await camera.takePictureAsync();
-      console.log(photo);
+      dispatch(setProductToCreateImage(photo.uri));
       navigation.goBack();
     }
   };

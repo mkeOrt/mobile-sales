@@ -3,11 +3,14 @@ import { Platform, ToastAndroid, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { Avatar } from 'react-native-elements/dist/Avatar';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 import tw from 'tailwind-react-native-classnames';
 import noImage from '../assets/no-image.png';
 import { useCreateProduct } from '../hooks/productsHook';
 
 const AddProduct = ({ navigation }) => {
+  const productToCreate = useSelector(state => state.products.productToCreate);
+
   const {
     product,
     setProduct,
@@ -33,7 +36,7 @@ const AddProduct = ({ navigation }) => {
         <View style={tw.style('rounded mx-auto shadow-lg', { overflow: 'hidden' })}>
           <Avatar
             size="large"
-            source={noImage}
+            source={productToCreate.image ? { uri: productToCreate.image } : noImage}
             style={{ height: 150, width: 150 }}
             onPress={() => navigation.push('AddProductImage')}
           />

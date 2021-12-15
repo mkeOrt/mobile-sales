@@ -6,9 +6,12 @@ import tw from 'tailwind-react-native-classnames';
 import { useGetProducts } from '../hooks/productsHook';
 import Skeleton from '../components/Skeleton';
 import { FlatList } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
+import { setProductToCreateImage } from '../slices/productsSlice';
 
 const Home = ({ navigation }) => {
-  const { products, getProducts, loadingProduct } = useGetProducts();
+  const { getProducts, loadingProduct } = useGetProducts();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -16,6 +19,11 @@ const Home = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  const goToCreateProductPage = () => {
+    dispatch(setProductToCreateImage(null));
+    navigation.push('AddProduct');
+  };
 
   return (
     <SafeAreaView style={tw`h-full bg-white`}>
@@ -35,7 +43,7 @@ const Home = ({ navigation }) => {
               placement="right"
               color="dodgerblue"
               icon={<Icon color="white" type="antdesign" name="plus" />}
-              onPress={() => navigation.push('AddProduct')}
+              onPress={goToCreateProductPage}
             />
           </Fragment>
       }
