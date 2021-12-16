@@ -15,12 +15,18 @@ const AddProduct = ({ navigation }) => {
     product,
     setProduct,
     creatingProduct,
+    getFileNameByUri,
     createProduct: createProductHook,
   } = useCreateProduct();
 
   const createProduct = async () => {
     try {
-      await createProductHook();
+      await createProductHook({
+        image: {
+          name: getFileNameByUri(productToCreate.image.uri),
+          base64: productToCreate.image.base64,
+        }
+      });
     } catch (error) {
       if (error.message === 'Invalid product') { // TODO Remove toast, it only works on android
         if (Platform.OS === 'android') ToastAndroid.show('Datos invalidos', ToastAndroid.SHORT);
@@ -36,7 +42,7 @@ const AddProduct = ({ navigation }) => {
         <View style={tw.style('rounded mx-auto shadow-lg', { overflow: 'hidden' })}>
           <Avatar
             size="large"
-            source={productToCreate.image ? { uri: productToCreate.image } : noImage}
+            source={productToCreate.image ? { uri: productToCreate.image.uri } : noImage}
             style={{ height: 150, width: 150 }}
             onPress={() => navigation.push('AddProductImage')}
           />
@@ -45,18 +51,21 @@ const AddProduct = ({ navigation }) => {
           label="Nombre"
           placeholder="Nombre del producto"
           value={product.name}
+          disabled={creatingProduct}
           onChange={e => setProduct(prev => ({ ...prev, name: e.nativeEvent.text }))}
         />
         <Input
           label="Precio"
           placeholder="Precio del producto"
           keyboardType="numeric"
+          disabled={creatingProduct}
           onChange={e => setProduct(prev => ({ ...prev, price: e.nativeEvent.text }))}
         />
         <Input
           label="Cantidad"
           placeholder="Cantidad del producto"
           keyboardType="numeric"
+          disabled={creatingProduct}
           onChange={e => setProduct(prev => ({ ...prev, quantity: e.nativeEvent.text }))}
         />
         <Button

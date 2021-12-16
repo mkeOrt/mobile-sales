@@ -14,7 +14,7 @@ const AddProductImage = ({ navigation }) => {
 
   const snap = async () => {
     let photo = await takePicture();
-    dispatch(setProductToCreateImage(photo.uri));
+    dispatch(setProductToCreateImage(photo));
     navigation.goBack();
   };
 

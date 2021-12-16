@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { supabase } from "../lib/supabase";
 import { setProducts } from "../slices/productsSlice";
+import { decode } from 'base64-arraybuffer'
 
 export const useGetProducts = () => {
   const [loadingProduct, setloadingProduct] = useState(false);
@@ -28,15 +29,33 @@ export const useCreateProduct = () => {
     name: '',
     price: 0,
     quantity: 0,
+    image: '',
   });
 
   const isAValidProduct = () => (product.name !== '');
 
-  const createProduct = async () => {
+  const createProduct = async ({ image = null }) => {
     if (!isAValidProduct()) throw new Error('Invalid product');
     setCreatingProduct(true);
-    await supabase.from('products').insert(product);
+
+    if (image) {
+      await supabase // TODO Validate error
+        .storage
+        .from('product')
+        .upload(image.name, decode(image.base64), {
+          contentType: 'image/jpg',
+        });
+        setProduct(prev => ({...prev, image: image.name}));
+    }
+
+    const productToUpload = image ? {...product, image: image.name} : product;
+    await supabase.from('products').insert(productToUpload);
     setCreatingProduct(false);
+  }
+
+  const getFileNameByUri = (uri = 'no-name.jpg') => {
+    const splitterUri = uri.split('/');
+    return splitterUri[splitterUri.length - 1];
   }
 
   return {
@@ -44,6 +63,7 @@ export const useCreateProduct = () => {
     setProduct,
     createProduct,
     creatingProduct,
+    getFileNameByUri
   }
 };
 

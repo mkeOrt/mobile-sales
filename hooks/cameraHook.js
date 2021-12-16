@@ -13,7 +13,7 @@ export const useTakePhoto = () => {
   }, []);
 
   const takePicture = async () => {
-    return camera.takePictureAsync();
+    return camera.takePictureAsync({ base64: true });
   }
 
   return {
